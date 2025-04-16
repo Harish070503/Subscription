@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center text-white">
+            <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+            <a href="{{ url_for('index') }}" class="hover:underline">Home</a>
+        </div>
+    </nav>
+
+    <!-- Dashboard Container -->
+    <div class="container mx-auto px-4 py-10">
+        <!-- Overview Cards -->
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Admin Dashboard Overview</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-blue-500">
+                <h3 class="text-lg font-semibold text-gray-700">Total Users</h3>
+                <p class="text-4xl font-bold text-blue-600 mt-2">{{ total_users }}</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-green-500">
+                <h3 class="text-lg font-semibold text-gray-700">Total Subscriptions</h3>
+                <p class="text-4xl font-bold text-green-600 mt-2">{{ total_subs }}</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-red-500">
+                <h3 class="text-lg font-semibold text-gray-700">Total Amount</h3>
+                <p class="text-4xl font-bold text-red-600 mt-2">${{ total_amount }}</p>
+            </div>
+        </div>
+
+        <!-- User-wise Subscription Table -->
+        <h3 class="text-2xl font-semibold text-gray-800 mb-4">User Subscription Summary</h3>
+        <div class="bg-white p-6 rounded-xl shadow-md overflow-x-auto">
+            <table class="min-w-full table-auto divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Username</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Subscription Count</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    {% for u in user_data %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-gray-800 font-medium">{{ u.username }}</td>
+                        <td class="px-6 py-4 text-blue-600 font-semibold">{{ u.count }}</td>
+                        <td class="px-6 py-4 text-red-600 font-semibold">${{ u.total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

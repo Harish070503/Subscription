@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-blue-500 p-4">
+        <div class="container mx-auto text-white flex justify-between items-center">
+            <h1 class="text-xl font-semibold">Subscription Management</h1>
+            <div>
+                <a href="{{ url_for('logout') }}" class="text-white px-4">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto my-8">
+        <h2 class="text-2xl font-semibold text-center mb-4">Your Dashboard</h2>
+
+        <a href="{{ url_for('add_subscription') }}" class="bg-green-500 text-white py-2 px-4 rounded mb-4 inline-block">Add Subscription</a>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for sub in subscriptions %}
+                <div class="bg-white p-4 rounded shadow-md">
+                    <h3 class="font-semibold">{{ sub.name }}</h3>
+                    <p>Amount: Rs.{{ sub.amount }}</p>
+                    <p>Renew Date: {{ sub.renew_date }}</p>
+                    <p>Platform: {{ sub.platform }}</p>
+                    <p>Category: {{ sub.category }}</p>
+                    <a href="{{ url_for('edit_subscription', id=sub.id) }}" class="text-blue-500">Edit</a> |
+                    <a href="{{ url_for('delete_subscription', id=sub.id) }}" class="text-red-500">Delete</a> |
+                    <a href="{{ url_for('checkout', sub_id=sub.id) }}" class="text-green-500">Checkout</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
